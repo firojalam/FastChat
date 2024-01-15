@@ -104,6 +104,19 @@ register_model_info(
     "https://lmsys.org/blog/2023-03-30-vicuna/",
     "a chat assistant fine-tuned on user-shared conversations by LMSYS",
 )
+
+register_model_info(
+    [
+        "jais-13b",
+        "jais-13b-chat",
+        "Jais-30b-v1",
+        "Jais-30b-chat-v1",
+    ],
+    "Jais",
+    "https://huggingface.co/core42/",
+    "By Core42 and MBZUAI",
+)
+
 register_model_info(
     ["llama-2-70b-chat", "llama-2-34b-chat", "llama-2-13b-chat", "llama-2-7b-chat"],
     "Llama 2",

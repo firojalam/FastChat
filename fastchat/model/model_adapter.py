@@ -761,6 +761,34 @@ class AlpacaAdapter(BaseModelAdapter):
     def get_default_conv_template(self, model_path: str) -> Conversation:
         return get_conv_template("alpaca")
 
+class JaisChatAdapter(BaseModelAdapter):
+    """The model adapter for Alpaca"""
+
+    use_fast_tokenizer = False
+
+    def match(self, model_path: str):
+        return "jais" in model_path.lower()
+    
+    def load_model(self, model_path: str, from_pretrained_kwargs: dict):
+        # revision = from_pretrained_kwargs.get("revision", "main")
+        # , revision=revision
+        tokenizer = AutoTokenizer.from_pretrained(
+            model_path, trust_remote_code=True
+        )
+        model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto", trust_remote_code=True)
+        return model, tokenizer
+    
+    def get_default_conv_template(self, model_path: str) -> Conversation:
+        model_path = model_path.lower()
+        if "jais-13b-chat" in model_path.lower():
+            return get_conv_template("jais-13b-chat")
+        if "jais-30b-chat" in model_path.lower():
+            return get_conv_template("jais-30b-chat")
+        return get_conv_template("jais-13b-chat")
+    
+
+    def get_default_conv_template(self, model_path: str) -> Conversation:
+        return get_conv_template("jais-13b-chat")
 
 class ChatGLMAdapter(BaseModelAdapter):
     """The model adapter for THUDM/chatglm-6b, THUDM/chatglm2-6b"""
@@ -1999,6 +2027,7 @@ register_model_adapter(LongChatAdapter)
 register_model_adapter(GoogleT5Adapter)
 register_model_adapter(KoalaAdapter)
 register_model_adapter(AlpacaAdapter)
+register_model_adapter(JaisChatAdapter)
 register_model_adapter(ChatGLMAdapter)
 register_model_adapter(CodeGeexAdapter)
 register_model_adapter(DollyV2Adapter)

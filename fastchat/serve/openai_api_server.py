@@ -407,6 +407,9 @@ async def create_chat_completion(request: ChatCompletionRequest):
         gen_params["max_new_tokens"],
         worker_addr,
     )
+    
+    print("request\n{}".format(request))
+    print("gen_params\n{}".format(gen_params))
 
     if error_check_ret is not None:
         return error_check_ret
@@ -430,6 +433,7 @@ async def create_chat_completion(request: ChatCompletionRequest):
         return create_error_response(ErrorCode.INTERNAL_ERROR, str(e))
     usage = UsageInfo()
     for i, content in enumerate(all_tasks):
+        #print("content:\n{}".format(content))
         if content["error_code"] != 0:
             return create_error_response(content["error_code"], content["text"])
         choices.append(

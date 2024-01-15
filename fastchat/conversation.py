@@ -560,6 +560,17 @@ register_conv_template(
     )
 )
 
+# Jais-13b-Chat code default template, FA copied from Alpaca
+register_conv_template(
+    Conversation(
+        name="jais-13b-chat",
+        system_message="أكمل المحادثة أدناه بين [|Human|] و [|AI|]", #Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n
+        roles=("### Input: [|Human|]", "### Response: [|AI|]"),
+        sep_style=SeparatorStyle.ADD_COLON_TWO,
+        sep="\n",
+        sep2="<|endoftext|>",
+    )
+)
 
 # Tulu default template
 register_conv_template(
